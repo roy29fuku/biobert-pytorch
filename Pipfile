@@ -1,0 +1,16 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+transformers = "==3.0.0"
+torch = "==1.7.0"
+seqeval = "==1.2.2"
+comet-ml = "==3.2.7"
+python-dotenv = "==0.15.0"
+
+[requires]
+python_version = "3.8"
