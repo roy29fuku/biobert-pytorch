@@ -22,16 +22,16 @@ import sys
 import pdb
 import subprocess
 
+# COMET ML 追記
+import comet_ml
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 from seqeval.metrics import f1_score, precision_score, recall_score
 from torch import nn
-
-# COMET ML 追記
-import comet_ml
-from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 
 from transformers import (
     AutoConfig,
@@ -243,7 +243,7 @@ def main():
         acc = accuracy_score(labels, preds)
 
         if experiment:
-          experiment.log_confusion_matrix(preds, labels)
+            experiment.log_confusion_matrix(preds, labels)
 
         return {
             'accuracy': acc,
