@@ -241,6 +241,7 @@ def main():
 
     # Training
     if training_args.do_train:
+        logger.info("*** Train ***")
         trainer.train(
             model_path=model_args.model_name_or_path if os.path.isdir(model_args.model_name_or_path) else None
         )
@@ -270,6 +271,7 @@ def main():
     
     # Predict
     if training_args.do_predict:
+        logger.info("*** Test ***")
         test_dataset = NerDataset(
             data_dir=data_args.data_dir,
             tokenizer=tokenizer,
@@ -315,7 +317,6 @@ def main():
                             logger.warning(
                                 "Maximum sequence length exceeded: No prediction for '%s'.", line.split()[0]
                             )
-
 
     return results
 
