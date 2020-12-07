@@ -224,33 +224,33 @@ def main():
 
         return preds_list, out_label_list
 
-    # def compute_metrics(p: EvalPrediction) -> Dict:
-    #     preds_list, out_label_list = align_predictions(p.predictions, p.label_ids)
-    #
-    #     return {
-    #         "precision": precision_score(out_label_list, preds_list),
-    #         "recall": recall_score(out_label_list, preds_list),
-    #         "f1": f1_score(out_label_list, preds_list),
-    #     }
-
-    # COMET ML 追記
-    def compute_metrics(pred):
-        experiment = comet_ml.get_global_experiment()
-
-        labels = pred.label_ids
-        preds = pred.predictions.argmax(-1)
-        precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average='macro')
-        acc = accuracy_score(labels, preds)
-
-        if experiment:
-            experiment.log_confusion_matrix(preds, labels)
+    def compute_metrics(p: EvalPrediction) -> Dict:
+        preds_list, out_label_list = align_predictions(p.predictions, p.label_ids)
 
         return {
-            'accuracy': acc,
-            'f1': f1,
-            'precision': precision,
-            'recall': recall
+            "precision": precision_score(out_label_list, preds_list),
+            "recall": recall_score(out_label_list, preds_list),
+            "f1": f1_score(out_label_list, preds_list),
         }
+
+    # COMET ML 追記
+    # def compute_metrics(pred):
+    #     experiment = comet_ml.get_global_experiment()
+    #
+    #     labels = pred.label_ids
+    #     preds = pred.predictions.argmax(-1)
+    #     precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average='macro')
+    #     acc = accuracy_score(labels, preds)
+    #
+    #     if experiment:
+    #         experiment.log_confusion_matrix(preds, labels)
+    #
+    #     return {
+    #         'accuracy': acc,
+    #         'f1': f1,
+    #         'precision': precision,
+    #         'recall': recall
+    #     }
 
     # Initialize our Trainer
     trainer = Trainer(
