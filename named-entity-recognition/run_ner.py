@@ -22,10 +22,7 @@ import sys
 import pdb
 import subprocess
 
-# COMET ML 追記
-import comet_ml
-from sklearn.metrics import accuracy_score, precision_recall_fscore_support
-
+import comet_ml  # torchやsk-learnの前に読んでおく必要がある。このファイルから呼び出すファイルに対しても先んじている必要がある。
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
@@ -232,25 +229,6 @@ def main():
             "recall": recall_score(out_label_list, preds_list),
             "f1": f1_score(out_label_list, preds_list),
         }
-
-    # COMET ML 追記
-    # def compute_metrics(pred):
-    #     experiment = comet_ml.get_global_experiment()
-    #
-    #     labels = pred.label_ids
-    #     preds = pred.predictions.argmax(-1)
-    #     precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average='macro')
-    #     acc = accuracy_score(labels, preds)
-    #
-    #     if experiment:
-    #         experiment.log_confusion_matrix(preds, labels)
-    #
-    #     return {
-    #         'accuracy': acc,
-    #         'f1': f1,
-    #         'precision': precision,
-    #         'recall': recall
-    #     }
 
     # Initialize our Trainer
     trainer = Trainer(
